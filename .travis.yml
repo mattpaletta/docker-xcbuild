@@ -2,16 +2,16 @@ sudo: required
 services:
 - docker
 before_install:
-- docker login -u $DOCKER_USER --password $DOCKER_PASS
-- export REPO=mattpaletta/xcbuild
+#- docker login -u $DOCKER_USER --password $DOCKER_PASS
+- export REPO="xcbuild"
+- export COMMIT="0"
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
   ; fi`
 script:
 - docker build -f Dockerfile -t $REPO:$COMMIT .
-- docker tagmy_example_app:latest
 after_success:
 - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-- docker push $REPO
+#- docker push $REPO
 env:
   global:
   - secure: rj4q3zlwrtEvAOn90OxC0S+F9dRzx7vCJSUHiiM8HVnb5liHJzXAmwwnbS9U+CFXZYSO73z+kLu4KxNZnd/tF+UTzNl3OCqLQTEqdnEzpgflyG6GUtsj11ucLjzrosQni3TQdq+jBJdvrQ4JkjM4rd7Q0LkA22/RygAxoe34DyGz6+O8UJ15bOEoMIZqP0wuKbViXVde1sBfV4DpO/c2bSYjzyMPwcmzOf1pIXWACk+aOcaH8DoWPUn5HdlzhBodjMmSsxts5J1ighqvHWRaRRMChb8T9OR75nJ3K+I0lPQCkbeJ37yT0/lfyRec5Hpe+n56FGlcMy7lU0ghfSi0/EiDyPJ9CsWWaz62n7V7D6Z+xPJULpv+7wdup19/33WYOY8LiAlXSa12704nB+qRzUjCxi3dJdL1+4zsit6BQYe4ODfjBRLelntRSoc1/GNjPc0PDkqPNhZJNO3L+Kn8shNHveKP7x72uZUrC0QguLO3ABpYkMSYLfsNfbvq7yIznbiqMCUpPZjdsp9JGkGu4h0wACbf71+qV86TAxVsqZ6/aEVVI1cS8N5HRnPBQL1vRKA2YfS0VFPVunUXPcHcRrRAvTh0rx3ONo9z92nQcIZVvUS4rSC2LkKHqVT4r087Sup89k/Zf+3Xy+D0yp2YdYFDiCeZu+9+e4PVJe1ckmA=
