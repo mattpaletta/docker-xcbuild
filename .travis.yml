@@ -1,16 +1,19 @@
 sudo: required
 services:
-  - docker
-
+- docker
 before_install:
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - export REPO=mattpaletta/xcbuild
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-
+- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+- export REPO=mattpaletta/xcbuild
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
+  ; fi`
 script:
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tagmy_example_app:latest
-  
+- docker build -f Dockerfile -t $REPO:$COMMIT .
+- docker tagmy_example_app:latest
 after_success:
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO
+- docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+- docker push $REPO
+env:
+  global:
+  - secure: rj4q3zlwrtEvAOn90OxC0S+F9dRzx7vCJSUHiiM8HVnb5liHJzXAmwwnbS9U+CFXZYSO73z+kLu4KxNZnd/tF+UTzNl3OCqLQTEqdnEzpgflyG6GUtsj11ucLjzrosQni3TQdq+jBJdvrQ4JkjM4rd7Q0LkA22/RygAxoe34DyGz6+O8UJ15bOEoMIZqP0wuKbViXVde1sBfV4DpO/c2bSYjzyMPwcmzOf1pIXWACk+aOcaH8DoWPUn5HdlzhBodjMmSsxts5J1ighqvHWRaRRMChb8T9OR75nJ3K+I0lPQCkbeJ37yT0/lfyRec5Hpe+n56FGlcMy7lU0ghfSi0/EiDyPJ9CsWWaz62n7V7D6Z+xPJULpv+7wdup19/33WYOY8LiAlXSa12704nB+qRzUjCxi3dJdL1+4zsit6BQYe4ODfjBRLelntRSoc1/GNjPc0PDkqPNhZJNO3L+Kn8shNHveKP7x72uZUrC0QguLO3ABpYkMSYLfsNfbvq7yIznbiqMCUpPZjdsp9JGkGu4h0wACbf71+qV86TAxVsqZ6/aEVVI1cS8N5HRnPBQL1vRKA2YfS0VFPVunUXPcHcRrRAvTh0rx3ONo9z92nQcIZVvUS4rSC2LkKHqVT4r087Sup89k/Zf+3Xy+D0yp2YdYFDiCeZu+9+e4PVJe1ckmA=
+  - secure: LkL4HXjlCk5wSUB43nursoRc6E5MPJ7/UNMWLsKNbYJxr95QzVXfiRwEu2nHvyzgoN2i+6ArG/Ym96MoKLuCJALTN0SnfEugsR6iF6cptTyliLcNQcDYli3RheZ71XQ5PC/iQzPGxrtaoCg2QMX5X7hwBDtlK4iM8W7AHpQP8nTDbmpyoKRBzZMc2QC6J3kwJbeb+lTiTp+dwL5sRDYY0M7Ry55k4lWUwu+DAMryIVcMNAkWtvOHubs5nX/fCeS2Bul+ksbwZhfxDgV8as5byWMdatm8dCl1gCgN9ue8nQWe93K+KWpd91hN2FhOnuHA2OrdXwqqsZAooIK3HvXY6RiyN4XBnF+V3U1FMRHxOxmMVrHV0PGYLLHQi1csLJJVP86Z9Si/Pr/hk/DH1fesyq0fe1REnj9T/PEsbY6mthJ8/B1453kfFXfV5ut0VcYH54AF1JyEOe9UWdPcvfY7M374VtubEW5d/6q3AdIbOxbJkmKAtfz59H/D333/OYGFTpHlzLm28z4+887ZNdI6mBPwUAl1JMqr4jDIwVwha6tAp5FPu3AAu7tFYheH2hu1TqxQmM6kwMr8KC3fhtlx5ncLsdjotHIksa2zOBQWNQT1gtklPo78zoZqua3PA3JVCQAcjtaT8ekJjuUcFU8OfzmNz3eKNn3cbPwlJ3dlYRw=
+  - secure: DMftFeXPPLnqy1YSzsPxPrvt+JwBdn/OtLis6YgKDmT98BGvqHRnPRucQaYv+83JLet9VBRicj2ZMRvQeMV7tm/SsfSELMNv2MSpTIyyKE63yOY9xIWmMtwjIxqYQk9yBGCp28O9wWC+D+1P+CTDj/Pqwoh1pNvMnXrJGUIh3Oov0ye9s8tBV1y97wptZKN7BjvjAH4FxXLhyZONJMXrATo4JnyB6CVvgD19BHvynNYmpXIGurxLZ210ZJ4k+2FIGEuz2v87x/mpIcHBzYyB6C+ZLzgNDJLP8c64FTd310KZgtZ2Mm47ch4ksd5p9hydLMw9lWshGXYBFbKWF40AAD0V6VIGvl6BOpxd/3ZxvL+yZIgBACHNmLisaYT62PZFyBIoJC8oW+KTb4fIfKyleb1fBeUzooR71d5pxsqWnHzE3/JKSdm6QlhuL+MMVabzrV48KWV03J8OWpdieHSY2VG8nHLQBhJO9dyV40fVgzUEkyjxCc851kHHT8RMPSX5envAMzbPkephlxa2ifE2VeO+LLyUWxLD2pOk+OXU43veJNIpkllPAO3FJrSzPsLLg9w4QSN0vEH2pGHBw1Y+ZJBFZNLvf9Y+GHR++3Z+J9UM9PiOwWXV85DPhxMmwvNduiaScaRSC71FH3fV+VnSTYNH0lt4Gvk4MyEx3wnkFx4=
