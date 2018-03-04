@@ -8,7 +8,6 @@ before_install:
   ; fi`
 script:
 - docker build -f Dockerfile -t $REPO:$COMMIT .
-- docker tagmy_example_app:latest
 after_success:
 - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
 #- docker push $REPO
