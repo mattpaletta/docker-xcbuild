@@ -1,4 +1,18 @@
 sudo: required
+
+language: python
+
 services:
-- docker
-- docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker
+
+before_install:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+script:
+  - docker image build -t xcbuild:$COMMIT .
+  - docker tag xcbuild:$COMMIT mattpaletta/xcbuild:$COMMIT
+  - docker tag xcbuild:$COMMIT mattpaletta/xcbuild:latest
+
+after_success:
+  - docker push mattpaletta/xcbuild:$COMMIT
+  - docker push mattpaletta/xcbuild:latest
