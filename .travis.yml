@@ -9,10 +9,8 @@ before_install:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
 
 script:
-  - docker image build -t xcbuild:$COMMIT .
-  - docker tag xcbuild:$COMMIT mattpaletta/xcbuild:$COMMIT
-  - docker tag xcbuild:$COMMIT mattpaletta/xcbuild:latest
+  - docker image build -t xcbuild:latest .
+  - docker tag xcbuild:latest mattpaletta/xcbuild:latest
 
 after_success:
-  - docker push mattpaletta/xcbuild:$COMMIT
   - docker push mattpaletta/xcbuild:latest
